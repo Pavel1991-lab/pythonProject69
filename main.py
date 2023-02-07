@@ -101,7 +101,7 @@ def users():
             )
         return json.dumps(user_response)
     elif request.method == 'POST':
-        user_data = json.load(request.data)
+        user_data = json.loads(request.data)
         db.session.add(User(**user_data))
         db.session.commit()
         return ''
@@ -128,7 +128,7 @@ def get_users(sid: int):
         db.session.commit()
         return ''
     elif request.method == 'PUT':
-        user_data = json.load(request.data)
+        user_data = json.loads(request.data)
         user = User.query.get(sid)
         user.first_name = user_data['first_name']
         user.last_name = user_data['last_name']
@@ -162,9 +162,9 @@ def orders():
                  'customer_id': orde.customer_id,
                  'executor_id': orde.executor_id}
             )
-        return json.dumps(user_response)
+        return json.dumps(user_response, ensure_ascii=False)
     elif request.method == 'POST':
-        order_data = json.load(request.data)
+        order_data = json.loads(request.data)
         db.session.add(Orders(**order_data))
         db.session.commit()
         return ''
@@ -194,16 +194,16 @@ def get_orders(sid: int):
         db.session.commit()
         return ''
     elif request.method == 'PUT':
-        order_data = json.load(request.data)
+        order_data = json.loads(request.data)
         order = Orders.query.get(sid)
-        order.name = user_data['name']
-        order.description = user_data['description']
-        order.start_date = user_data['start_date']
-        order.end_date = user_data['end_date']
-        order.address = user_data['address']
-        order.price = user_data['price']
-        order.customer_id = user_data['customer_id']
-        order.executor_id = user_data['executor_id']
+        order.name =  order_data['name']
+        order.description =  order_data['description']
+        order.start_date =  order_data['start_date']
+        order.end_date =  order_data['end_date']
+        order.address =  order_data['address']
+        order.price =  order_data['price']
+        order.customer_id =  order_data['customer_id']
+        order.executor_id =  order_data['executor_id']
         db.session.add(order)
         db.session.commit()
         return ''
@@ -251,7 +251,7 @@ def get_offers(sid: int):
         db.session.commit()
         return ''
     elif request.method == 'PUT':
-        orffer_data = json.load(request.data)
+        orffer_data = json.loads(request.data)
         offers = Offers.query.get(sid)
         offers.order_id = orffer_data['order_id']
         offers.executor_id = orffer_data['executor_id']
