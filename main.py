@@ -227,7 +227,7 @@ def offers():
             )
         return json.dumps(user_response)
     elif request.method == 'POST':
-        offer_data = json.load(offer.data)
+        offer_data = json.loads(offer.data)
         db.session.add(Offers(**offer_data))
         db.session.commit(offer_data)
         return ''
